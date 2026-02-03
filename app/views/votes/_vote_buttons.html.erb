@@ -1,0 +1,45 @@
+<% user_vote = user_signed_in? ? post.votes.find_by(user: current_user)&.value : nil %>
+
+<div id="vote-buttons-<%= post.id %>" class="flex items-center justify-center gap-6">
+  <!-- Upvote -->
+  <% if user_signed_in? %>
+    <%= button_to post_votes_path(post, value: 1), method: :post, class: "group flex items-center gap-2 px-5 py-3 rounded-xl font-semibold transition-all duration-300 #{user_vote == 1 ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg shadow-green-500/30' : 'glass text-gray-300 hover:text-green-400 hover:shadow-lg hover:shadow-green-500/20'}" do %>
+      <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+      </svg>
+      <span class="font-bold"><%= post.upvotes_count %></span>
+    <% end %>
+  <% else %>
+    <div class="flex items-center gap-2 px-5 py-3 rounded-xl font-semibold glass text-gray-400">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+      </svg>
+      <span class="font-bold"><%= post.upvotes_count %></span>
+    </div>
+  <% end %>
+
+  <!-- Score -->
+  <div class="text-center px-4">
+    <div class="text-3xl font-black <%= post.score > 0 ? 'text-gradient' : post.score < 0 ? 'text-red-400' : 'text-gray-400' %>">
+      <%= post.score > 0 ? "+#{post.score}" : post.score %>
+    </div>
+    <div class="text-xs text-gray-500 font-medium mt-1">SCORE</div>
+  </div>
+
+  <!-- Downvote -->
+  <% if user_signed_in? %>
+    <%= button_to post_votes_path(post, value: -1), method: :post, class: "group flex items-center gap-2 px-5 py-3 rounded-xl font-semibold transition-all duration-300 #{user_vote == -1 ? 'bg-gradient-to-r from-red-500 to-rose-500 text-white shadow-lg shadow-red-500/30' : 'glass text-gray-300 hover:text-red-400 hover:shadow-lg hover:shadow-red-500/20'}" do %>
+      <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+      </svg>
+      <span class="font-bold"><%= post.downvotes_count %></span>
+    <% end %>
+  <% else %>
+    <div class="flex items-center gap-2 px-5 py-3 rounded-xl font-semibold glass text-gray-400">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+      </svg>
+      <span class="font-bold"><%= post.downvotes_count %></span>
+    </div>
+  <% end %>
+</div>

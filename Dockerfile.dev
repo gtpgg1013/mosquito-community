@@ -1,0 +1,28 @@
+FROM ruby:3.3.10-slim
+
+# Install dependencies
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y \
+    build-essential \
+    curl \
+    git \
+    libpq-dev \
+    libyaml-dev \
+    libvips \
+    postgresql-client \
+    nodejs \
+    npm && \
+    rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Install bundler
+RUN gem install bundler
+
+# Set environment
+ENV BUNDLE_PATH=/usr/local/bundle
+ENV RAILS_ENV=development
+
+# Default command
+CMD ["bash"]

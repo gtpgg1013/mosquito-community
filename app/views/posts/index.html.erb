@@ -1,0 +1,68 @@
+<div class="max-w-7xl mx-auto px-4 py-8">
+  <!-- Header -->
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+    <div>
+      <h1 class="text-3xl md:text-4xl font-black text-white mb-2">
+        모기 퇴치 갤러리
+      </h1>
+      <p class="text-gray-400">모기 헌터들의 창의적인 퇴치 순간을 구경하세요</p>
+    </div>
+    <% if user_signed_in? %>
+      <%= link_to new_post_path, class: "px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 rounded-xl text-white font-bold transition-all duration-300 flex items-center gap-2 neon-green" do %>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        업로드
+      <% end %>
+    <% end %>
+  </div>
+
+  <!-- Sort Tabs -->
+  <div class="flex gap-2 mb-8">
+    <%= link_to posts_path(sort: "recent"), class: "px-5 py-2.5 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 #{params[:sort] != 'score' ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg shadow-green-500/25' : 'glass text-gray-300 hover:text-white'}" do %>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      최신순
+    <% end %>
+    <%= link_to posts_path(sort: "score"), class: "px-5 py-2.5 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 #{params[:sort] == 'score' ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg shadow-green-500/25' : 'glass text-gray-300 hover:text-white'}" do %>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+      </svg>
+      인기순
+    <% end %>
+  </div>
+
+  <!-- Posts Grid -->
+  <% if @posts.any? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <% @posts.each do |post| %>
+        <%= render "posts/post_card", post: post %>
+      <% end %>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-12 flex justify-center">
+      <%= paginate @posts %>
+    </div>
+  <% else %>
+    <!-- Empty State -->
+    <div class="glass-card rounded-3xl p-12 text-center">
+      <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center">
+        <span class="text-5xl animate-float">🦟</span>
+      </div>
+      <h3 class="text-2xl font-bold text-white mb-2">아직 게시물이 없습니다</h3>
+      <p class="text-gray-400 mb-8">첫 번째 모기 퇴치 인증을 올려보세요!</p>
+      <% if user_signed_in? %>
+        <%= link_to new_post_path, class: "inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 rounded-xl text-white font-bold transition-all duration-300 neon-green" do %>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+          </svg>
+          업로드하기
+        <% end %>
+      <% else %>
+        <p class="text-gray-500">로그인하고 첫 번째 헌터가 되세요!</p>
+      <% end %>
+    </div>
+  <% end %>
+</div>

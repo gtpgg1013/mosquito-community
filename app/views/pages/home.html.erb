@@ -1,0 +1,215 @@
+<% @posts = Post.includes(:user).by_score.limit(6) %>
+<% @total_posts = Post.count %>
+<% @total_users = User.count %>
+<% @total_kills = Post.sum(:upvotes_count) %>
+
+<!-- Hero Section -->
+<div class="relative overflow-hidden min-h-[80vh] flex items-center">
+  <!-- Animated Background -->
+  <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-green-950 to-gray-900 animate-gradient"></div>
+
+  <!-- Floating Mosquitoes -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-20 left-[10%] text-4xl opacity-20 animate-fly" style="animation-delay: 0s;">🦟</div>
+    <div class="absolute top-40 right-[15%] text-3xl opacity-15 animate-fly" style="animation-delay: 1s;">🦟</div>
+    <div class="absolute bottom-32 left-[20%] text-5xl opacity-10 animate-fly" style="animation-delay: 2s;">🦟</div>
+    <div class="absolute top-60 left-[70%] text-2xl opacity-20 animate-fly" style="animation-delay: 0.5s;">🦟</div>
+    <div class="absolute bottom-40 right-[25%] text-4xl opacity-15 animate-fly" style="animation-delay: 1.5s;">🦟</div>
+  </div>
+
+  <!-- Glow Effects -->
+  <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-green-500/20 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-emerald-500/15 rounded-full blur-3xl"></div>
+
+  <div class="max-w-7xl mx-auto px-4 py-20 relative z-10">
+    <div class="text-center">
+      <!-- Main Icon -->
+      <div class="relative inline-block mb-8">
+        <div class="text-9xl animate-float">🦟</div>
+        <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-24 h-4 bg-black/30 rounded-full blur-md"></div>
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-5xl md:text-7xl font-black mb-6">
+        <span class="text-gradient">모기잡이</span>
+        <span class="text-white"> 커뮤니티</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto mb-12 leading-relaxed">
+        모기를 창의적으로 잡은 순간을 공유하세요!<br>
+        <span class="text-green-400">최고의 모기 헌터</span>에게 투표하고, 말라리아 퇴치에 동참하세요.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <%= link_to posts_path, class: "group px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white font-bold text-lg rounded-2xl shadow-lg transition-all duration-300 neon-green flex items-center justify-center gap-2" do %>
+          <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+          갤러리 둘러보기
+        <% end %>
+        <%= link_to rankings_path, class: "group px-8 py-4 glass hover:bg-white/20 text-white font-bold text-lg rounded-2xl shadow-lg transition-all duration-300 flex items-center justify-center gap-2" do %>
+          <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+          </svg>
+          랭킹 보기
+        <% end %>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="max-w-7xl mx-auto px-4 -mt-16 relative z-20">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="glass-card rounded-2xl p-8 text-center card-hover group">
+      <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+        <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+      </div>
+      <div class="text-5xl font-black text-gradient mb-2"><%= @total_posts %></div>
+      <div class="text-gray-400 font-medium">퇴치 인증</div>
+    </div>
+    <div class="glass-card rounded-2xl p-8 text-center card-hover group">
+      <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+        <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+        </svg>
+      </div>
+      <div class="text-5xl font-black text-gradient mb-2"><%= @total_users %></div>
+      <div class="text-gray-400 font-medium">모기 헌터</div>
+    </div>
+    <div class="glass-card rounded-2xl p-8 text-center card-hover group">
+      <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+        <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>
+        </svg>
+      </div>
+      <div class="text-5xl font-black text-gradient mb-2"><%= @total_kills %></div>
+      <div class="text-gray-400 font-medium">총 추천</div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Posts -->
+<% if @posts.any? %>
+  <div class="max-w-7xl mx-auto px-4 py-20">
+    <div class="flex justify-between items-center mb-10">
+      <div>
+        <h2 class="text-3xl font-black text-white mb-2">인기 게시물</h2>
+        <p class="text-gray-400">지금 가장 핫한 모기 퇴치 순간들</p>
+      </div>
+      <%= link_to posts_path, class: "group flex items-center gap-2 text-green-400 hover:text-green-300 font-semibold transition-colors" do %>
+        전체 보기
+        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      <% end %>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @posts.each do |post| %>
+        <%= render "posts/post_card", post: post %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<!-- Mission -->
+<div class="max-w-7xl mx-auto px-4 py-20">
+  <div class="relative overflow-hidden glass rounded-3xl p-8 md:p-12">
+    <!-- Background Glow -->
+    <div class="absolute top-0 right-0 w-64 h-64 bg-green-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl"></div>
+
+    <div class="relative z-10">
+      <div class="flex items-center justify-center gap-2 mb-4">
+        <span class="text-4xl">❤️</span>
+        <span class="px-3 py-1 bg-green-500/20 text-green-400 text-sm font-semibold rounded-full">기부 프로젝트</span>
+      </div>
+
+      <h2 class="text-3xl md:text-4xl font-black text-white text-center mb-4">
+        수익의 <span class="text-gradient">50%</span>는 말라리아 퇴치에 기부됩니다
+      </h2>
+      <p class="text-lg text-gray-300 text-center max-w-3xl mx-auto">
+        모기잡이 커뮤니티의 모든 수익 중 절반은 말라리아 퇴치를 위해 일하는 단체에 기부됩니다.
+        여러분의 모기 퇴치 인증 하나하나가 전 세계 생명을 구하는 데 동참하는 것입니다.
+      </p>
+
+      <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="glass-card rounded-2xl p-6 text-center card-hover">
+          <div class="text-4xl mb-3">💉</div>
+          <div class="text-white font-semibold">백신 지원</div>
+        </div>
+        <div class="glass-card rounded-2xl p-6 text-center card-hover">
+          <div class="text-4xl mb-3">🦟</div>
+          <div class="text-white font-semibold">모기장 보급</div>
+        </div>
+        <div class="glass-card rounded-2xl p-6 text-center card-hover">
+          <div class="text-4xl mb-3">🏥</div>
+          <div class="text-white font-semibold">의료 지원</div>
+        </div>
+        <div class="glass-card rounded-2xl p-6 text-center card-hover">
+          <div class="text-4xl mb-3">📚</div>
+          <div class="text-white font-semibold">예방 교육</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- How It Works -->
+<div class="max-w-7xl mx-auto px-4 py-20">
+  <div class="text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-black text-white mb-4">참여 방법</h2>
+    <p class="text-gray-400 text-lg">간단한 3단계로 모기 헌터가 되세요!</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- Step 1 -->
+    <div class="relative group">
+      <div class="glass-card rounded-2xl p-8 text-center card-hover h-full">
+        <div class="w-20 h-20 mx-auto bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center text-4xl font-black text-white mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-green-500/30">
+          1
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">모기를 잡으세요</h3>
+        <p class="text-gray-400">창의적인 방법으로 모기를 퇴치하세요. 전기 파리채, 손바닥, 뭐든 좋아요!</p>
+      </div>
+      <!-- Connector Line (hidden on mobile) -->
+      <div class="hidden md:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-green-500 to-transparent"></div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="relative group">
+      <div class="glass-card rounded-2xl p-8 text-center card-hover h-full">
+        <div class="w-20 h-20 mx-auto bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center text-4xl font-black text-white mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-green-500/30">
+          2
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">인증샷을 올리세요</h3>
+        <p class="text-gray-400">사진이나 동영상으로 여러분의 모기 퇴치 순간을 공유하세요.</p>
+      </div>
+      <!-- Connector Line (hidden on mobile) -->
+      <div class="hidden md:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-green-500 to-transparent"></div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="relative group">
+      <div class="glass-card rounded-2xl p-8 text-center card-hover h-full">
+        <div class="w-20 h-20 mx-auto bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center text-4xl font-black text-white mb-6 group-hover:scale-110 transition-transform shadow-lg shadow-green-500/30">
+          3
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">투표하고 랭킹에 올라가세요</h3>
+        <p class="text-gray-400">다른 헌터들의 게시물에 투표하고, 최고의 헌터가 되어보세요!</p>
+      </div>
+    </div>
+  </div>
+</div>

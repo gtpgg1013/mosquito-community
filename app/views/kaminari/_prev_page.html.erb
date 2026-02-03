@@ -1,0 +1,10 @@
+<%# Link tag for "previous page"
+    - available local variables
+      url:  url to the previous page
+      current_page: a page object of current page
+%>
+<%= link_to url, class: 'w-10 h-10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200', remote: remote do %>
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+  </svg>
+<% end %>
