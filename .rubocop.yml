@@ -7,6 +7,14 @@ inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 Layout/SpaceInsideArrayLiteralBrackets:
   Enabled: false
 
-# Allow trailing whitespace in HTML/ERB templates
+# Allow trailing whitespace
 Layout/TrailingWhitespace:
-  AllowInHeredoc: true
+  Enabled: false
+
+# Allow single quotes for strings
+Style/StringLiterals:
+  Enabled: false
+
+# Allow single quotes in interpolated strings
+Style/StringLiteralsInInterpolation:
+  Enabled: false
