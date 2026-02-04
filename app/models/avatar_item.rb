@@ -29,11 +29,11 @@ class AvatarItem < ApplicationRecord
 
   def rarity_emoji
     case rarity
-    when 'common' then ''
-    when 'rare' then ''
-    when 'epic' then ''
-    when 'legendary' then ''
-    else ''
+    when 'common' then '⚪'
+    when 'rare' then '🔵'
+    when 'epic' then '🟣'
+    when 'legendary' then '🌟'
+    else '⚪'
     end
   end
 end
