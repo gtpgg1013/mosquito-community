@@ -16,21 +16,21 @@ class Post < ApplicationRecord
   scope :this_week, -> { where("created_at >= ?", Time.current.beginning_of_week) }
   scope :this_month, -> { where("created_at >= ?", Time.current.beginning_of_month) }
 
-  private
-
-  def check_avatar_rewards
-    AvatarRewardService.new(user).check_and_grant_rewards
-  end
-
-  def update_score!
-    update!(score: upvotes_count - downvotes_count)
-  end
-
   def image?
     media_type == "image"
   end
 
   def video?
     media_type == "video"
+  end
+
+  def update_score!
+    update!(score: upvotes_count - downvotes_count)
+  end
+
+  private
+
+  def check_avatar_rewards
+    AvatarRewardService.new(user).check_and_grant_rewards
   end
 end
