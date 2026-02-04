@@ -1,5 +1,5 @@
 class AvatarsController < ApplicationController
-  before_action :require_authentication
+  before_action :authenticate_user!
   before_action :set_avatar, only: [:show, :edit, :update]
   before_action :grant_starter_items, only: [:show, :edit, :shop]
 

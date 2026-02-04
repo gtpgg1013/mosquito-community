@@ -1,5 +1,5 @@
 class NftsController < ApplicationController
-  before_action :require_authentication, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
     @nfts = Nft.minted.includes(:post, :user).by_recent.page(params[:page]).per(12)
