@@ -18,3 +18,11 @@ Style/StringLiterals:
 # Allow single quotes in interpolated strings
 Style/StringLiteralsInInterpolation:
   Enabled: false
+
+# Allow trailing commas in array literals
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+
+# Allow trailing commas in hash literals
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
