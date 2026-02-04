@@ -69,6 +69,43 @@
         <%= render "votes/vote_buttons", post: @post %>
       </div>
 
+      <!-- NFT Section -->
+      <div class="glass rounded-2xl p-4 mb-8">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm font-bold text-white">NFT</p>
+              <% if @post.nft&.minted? %>
+                <p class="text-xs text-green-400">발행 완료</p>
+              <% elsif Nft.eligible_for_minting?(@post) %>
+                <p class="text-xs text-purple-400">발행 가능</p>
+              <% else %>
+                <p class="text-xs text-gray-500">10점 이상 필요 (<%= @post.score %>/10)</p>
+              <% end %>
+            </div>
+          </div>
+
+          <% if @post.nft&.minted? %>
+            <%= link_to @post.nft, class: "px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm font-bold rounded-xl hover:shadow-lg hover:shadow-purple-500/25 transition-all" do %>
+              NFT 보기
+            <% end %>
+          <% elsif user_signed_in? && @post.user == current_user && Nft.eligible_for_minting?(@post) %>
+            <%= button_to nfts_path(post_id: @post.id), method: :post, class: "px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm font-bold rounded-xl hover:shadow-lg hover:shadow-purple-500/25 transition-all" do %>
+              NFT 발행
+            <% end %>
+          <% else %>
+            <span class="px-4 py-2 bg-gray-800 text-gray-500 text-sm rounded-xl cursor-not-allowed">
+              NFT 발행
+            </span>
+          <% end %>
+        </div>
+      </div>
+
       <!-- Comments Section -->
       <div id="comments-section">
         <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">

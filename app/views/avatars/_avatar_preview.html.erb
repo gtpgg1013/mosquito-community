@@ -1,0 +1,36 @@
+<% if avatar.background_item %>
+  <div class="absolute inset-0 flex items-center justify-center">
+    <span class="text-8xl opacity-30"><%= avatar.background_item.rarity_emoji %></span>
+  </div>
+<% end %>
+
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+  <!-- Head -->
+  <div class="text-center mb-1">
+    <% if avatar.head_item %>
+      <span class="text-4xl"><%= avatar.head_item.rarity_emoji %></span>
+    <% else %>
+      <div class="w-12 h-12 rounded-full bg-gray-700/50 border border-dashed border-gray-600 flex items-center justify-center mx-auto">
+        <span class="text-gray-500">?</span>
+      </div>
+    <% end %>
+  </div>
+  
+  <!-- Body -->
+  <div class="text-center">
+    <% if avatar.body_item %>
+      <span class="text-5xl"><%= avatar.body_item.rarity_emoji %></span>
+    <% else %>
+      <div class="w-14 h-16 rounded-lg bg-gray-700/50 border border-dashed border-gray-600 flex items-center justify-center mx-auto">
+        <span class="text-gray-500">?</span>
+      </div>
+    <% end %>
+  </div>
+  
+  <!-- Accessory -->
+  <% if avatar.accessory_item %>
+    <div class="absolute bottom-3 right-3">
+      <span class="text-2xl"><%= avatar.accessory_item.rarity_emoji %></span>
+    </div>
+  <% end %>
+</div>

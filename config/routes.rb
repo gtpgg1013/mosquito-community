@@ -21,6 +21,25 @@ Rails.application.routes.draw do
   # Rankings
   get "rankings", to: "rankings#index"
 
+  # Avatar
+  resource :avatar, only: [:show, :edit, :update] do
+    get :inventory
+    get :shop
+    post :equip
+    post :unequip
+    post :buy
+  end
+
+  # Donations
+  get "donations", to: "donations#index"
+
+  # NFTs
+  resources :nfts, only: [:index, :show, :create] do
+    collection do
+      get :my_nfts
+    end
+  end
+
   # Clerk Webhook
   namespace :webhooks do
     post "clerk", to: "clerk#create"
