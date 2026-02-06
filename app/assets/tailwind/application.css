@@ -6,6 +6,9 @@
   --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
   --animate-gradient: gradient-shift 5s ease infinite;
   --animate-shimmer: shimmer 1.5s infinite;
+  --animate-bounce-slow: bounce-slow 2s ease-in-out infinite;
+  --animate-pulse-slow: pulse-slow 3s ease-in-out infinite;
+  --animate-spin-slow: spin-slow 8s linear infinite;
 }
 
 @keyframes float {
@@ -37,6 +40,21 @@
   100% { background-position: 200% 0; }
 }
 
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 @utility animate-float {
   animation: var(--animate-float);
 }
@@ -58,6 +76,18 @@
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
   background-size: 200% 100%;
   animation: var(--animate-shimmer);
+}
+
+@utility animate-bounce-slow {
+  animation: var(--animate-bounce-slow);
+}
+
+@utility animate-pulse-slow {
+  animation: var(--animate-pulse-slow);
+}
+
+@utility animate-spin-slow {
+  animation: var(--animate-spin-slow);
 }
 
 @utility glass {

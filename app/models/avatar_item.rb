@@ -36,4 +36,21 @@ class AvatarItem < ApplicationRecord
     else '⚪'
     end
   end
+
+  # 실제 아이템 이모지 (새 emoji 필드 사용)
+  def display_emoji
+    emoji.presence || default_emoji_for_category
+  end
+
+  private
+
+  def default_emoji_for_category
+    case category
+    when 'head' then '🧢'
+    when 'body' then '👕'
+    when 'background' then '🌫️'
+    when 'accessory' then '🪤'
+    else '❓'
+    end
+  end
 end

@@ -53,21 +53,31 @@
             <% end %>
           </div>
 
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             <% (@owned_items[category] || []).each do |item| %>
               <% is_equipped = @avatar.equipped?(item) %>
-              <%= button_to equip_avatar_path(item_id: item.id), method: :post, class: "relative p-4 rounded-xl transition-all #{is_equipped ? 'bg-green-500/20 ring-2 ring-green-500' : 'bg-gray-800/50 hover:bg-gray-700/50'}" do %>
+              <%= button_to equip_avatar_path(item_id: item.id), method: :post, class: "relative p-5 rounded-2xl transition-all transform hover:scale-105 #{is_equipped ? 'bg-gradient-to-br from-green-500/30 to-emerald-600/30 ring-2 ring-green-500 shadow-lg shadow-green-500/20' : 'bg-gray-800/60 hover:bg-gray-700/60 border border-gray-700/50 hover:border-gray-600'}" do %>
                 <div class="text-center">
-                  <span class="text-3xl"><%= item.rarity_emoji %></span>
-                  <p class="text-sm font-medium text-white mt-2 truncate"><%= item.name %></p>
-                  <span class="inline-block px-2 py-0.5 text-xs rounded-full mt-1 bg-<%= item.rarity_color %>-500/20 text-<%= item.rarity_color %>-400">
-                    <%= item.rarity.capitalize %>
-                  </span>
+                  <div class="relative inline-block">
+                    <span class="text-5xl drop-shadow-md"><%= item.display_emoji %></span>
+                    <% if item.rarity == 'legendary' %>
+                      <div class="absolute inset-0 animate-pulse-slow">
+                        <span class="text-5xl opacity-50 blur-sm"><%= item.display_emoji %></span>
+                      </div>
+                    <% end %>
+                  </div>
+                  <p class="text-sm font-bold text-white mt-3 truncate"><%= item.name %></p>
+                  <div class="flex items-center justify-center gap-1.5 mt-2">
+                    <span class="inline-block w-2 h-2 rounded-full bg-<%= item.rarity_color %>-500"></span>
+                    <span class="text-xs text-<%= item.rarity_color %>-400 font-medium">
+                      <%= item.rarity.capitalize %>
+                    </span>
+                  </div>
                 </div>
                 <% if is_equipped %>
-                  <div class="absolute top-2 right-2">
-                    <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  <div class="absolute top-3 right-3 bg-green-500 rounded-full p-1 shadow-lg">
+                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                     </svg>
                   </div>
                 <% end %>

@@ -1,36 +1,77 @@
-<% if avatar.background_item %>
-  <div class="absolute inset-0 flex items-center justify-center">
-    <span class="text-8xl opacity-30"><%= avatar.background_item.rarity_emoji %></span>
-  </div>
-<% end %>
+<%#
+  Avatar Preview Component
+  - 실제 캐릭터 베이스 위에 아이템이 장착되는 구조
+  - 배경 → 캐릭터 몸 → 의상 → 머리 → 모자 → 액세서리 순서로 레이어링
+%>
 
-<div class="absolute inset-0 flex flex-col items-center justify-center">
-  <!-- Head -->
-  <div class="text-center mb-1">
-    <% if avatar.head_item %>
-      <span class="text-4xl"><%= avatar.head_item.rarity_emoji %></span>
-    <% else %>
-      <div class="w-12 h-12 rounded-full bg-gray-700/50 border border-dashed border-gray-600 flex items-center justify-center mx-auto">
-        <span class="text-gray-500">?</span>
-      </div>
-    <% end %>
-  </div>
-  
-  <!-- Body -->
-  <div class="text-center">
-    <% if avatar.body_item %>
-      <span class="text-5xl"><%= avatar.body_item.rarity_emoji %></span>
-    <% else %>
-      <div class="w-14 h-16 rounded-lg bg-gray-700/50 border border-dashed border-gray-600 flex items-center justify-center mx-auto">
-        <span class="text-gray-500">?</span>
-      </div>
-    <% end %>
-  </div>
-  
-  <!-- Accessory -->
-  <% if avatar.accessory_item %>
-    <div class="absolute bottom-3 right-3">
-      <span class="text-2xl"><%= avatar.accessory_item.rarity_emoji %></span>
+<!-- Background Layer -->
+<div class="absolute inset-0 overflow-hidden">
+  <% if avatar.background_item %>
+    <!-- 배경 아이템 효과 -->
+    <div class="absolute inset-0 flex items-center justify-center">
+      <span class="text-[140px] opacity-15 select-none blur-[2px]"><%= avatar.background_item.display_emoji %></span>
     </div>
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/40"></div>
+  <% else %>
+    <div class="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950"></div>
   <% end %>
 </div>
+
+<!-- Character Container - 이모지 기반 캐릭터 -->
+<div class="absolute inset-0 flex items-center justify-center">
+  <div class="relative flex flex-col items-center">
+
+    <!-- 머리 아이템 (모자/헬멧 등) -->
+    <% if avatar.head_item %>
+      <div class="relative z-20 transform hover:scale-110 transition-transform" style="margin-bottom: -20px;">
+        <span class="text-5xl drop-shadow-lg"><%= avatar.head_item.display_emoji %></span>
+      </div>
+    <% end %>
+
+    <!-- 캐릭터 얼굴 (기본 이모지) -->
+    <div class="relative z-10">
+      <span class="text-7xl">😊</span>
+    </div>
+
+    <!-- 몸통 아이템 (의상) -->
+    <div class="relative z-10 transform hover:scale-105 transition-transform" style="margin-top: -15px;">
+      <% if avatar.body_item %>
+        <span class="text-6xl drop-shadow-lg"><%= avatar.body_item.display_emoji %></span>
+      <% else %>
+        <span class="text-6xl opacity-50">👕</span>
+      <% end %>
+    </div>
+
+    <!-- 하체 (기본 바지+신발) -->
+    <div class="flex flex-col items-center" style="margin-top: -10px;">
+      <span class="text-4xl">👖</span>
+      <div class="flex gap-1" style="margin-top: -8px;">
+        <span class="text-2xl">👟</span>
+        <span class="text-2xl">👟</span>
+      </div>
+    </div>
+
+    <!-- 액세서리 - 오른손에 들고 있는 아이템 -->
+    <% if avatar.accessory_item %>
+      <div class="absolute z-30 transform hover:scale-125 transition-transform animate-bounce-slow" style="right: -50px; top: 50%;">
+        <span class="text-4xl drop-shadow-lg"><%= avatar.accessory_item.display_emoji %></span>
+      </div>
+    <% end %>
+
+    <!-- 캐릭터 그림자 -->
+    <div class="absolute w-24 h-4 bg-black/20 rounded-full blur-md" style="bottom: -10px;"></div>
+  </div>
+</div>
+
+<!-- 희귀도 글로우 효과 -->
+<% best_rarity = [avatar.head_item&.rarity, avatar.body_item&.rarity, avatar.background_item&.rarity, avatar.accessory_item&.rarity].compact.max_by { |r| %w[common rare epic legendary].index(r) || 0 } %>
+<% if best_rarity == 'legendary' %>
+  <div class="absolute inset-0 pointer-events-none animate-pulse-slow">
+    <div class="absolute inset-0 bg-gradient-to-t from-yellow-500/20 via-transparent to-yellow-500/10"></div>
+    <div class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-yellow-400 to-transparent"></div>
+  </div>
+<% elsif best_rarity == 'epic' %>
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute inset-0 bg-gradient-to-t from-purple-500/15 via-transparent to-transparent"></div>
+  </div>
+<% end %>

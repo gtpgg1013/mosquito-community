@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     post :equip
     post :unequip
     post :buy
+    get :demo, on: :collection
   end
 
   # Donations

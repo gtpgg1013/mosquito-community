@@ -1,7 +1,19 @@
 class AvatarsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:demo]
   before_action :set_avatar, only: [:show, :edit, :update]
   before_action :grant_starter_items, only: [:show, :edit, :shop]
+
+  # 인증 없이 아바타 프리뷰 테스트용 (개발 환경에서만)
+  def demo
+    @avatar = Avatar.new
+    @avatar.head_item = AvatarItem.heads.find_by(rarity: 'legendary') || AvatarItem.heads.first
+    @avatar.body_item = AvatarItem.bodies.find_by(rarity: 'epic') || AvatarItem.bodies.first
+    @avatar.background_item = AvatarItem.backgrounds.find_by(rarity: 'rare') || AvatarItem.backgrounds.first
+    @avatar.accessory_item = AvatarItem.accessories.find_by(rarity: 'legendary') || AvatarItem.accessories.first
+
+    @all_items = AvatarItem.all.group_by(&:category)
+    render :demo
+  end
 
   def show
     @owned_items = current_user.avatar_items.group_by(&:category)
